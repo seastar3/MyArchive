@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>
+反応するホームページ
+</title>
+<meta http-equiv="Content-Type" content="text/html: charset=Shift_JIS">
+<script language="JavaScript">
+<!--
+
+iroban=new Array();
+iroban[0]="#ccffff"; //  水　色
+iroban[1]="#ffccff"; //  桃　色
+iroban[2]="#99ff99"; //  黄緑色
+iroban[3]="#ffffcc"; //  クリーム色
+
+function rdoiro_changed(){
+  var flag = 1; 
+  var i; 
+  for(i = 0; i < 4; i ++){ 
+    if(document.f1.rdoiro[i].checked){ 
+      flag = 0; break; 
+    }
+  }
+//  alert(document.f1.rdoiro[i].value);
+  document.bgColor=iroban[i];
+}
+
+
+function btnJikkou_onClick(){
+  var kotae = 5000;
+  kotae = document.f1.slctChuumon.value * document.f1.txtKosuu.value;
+  if(document.f1.chkZei.checked)  kotae=kotae*1.10;
+  document.getElementById("divKotae").innerHTML = 
+     "<font size=8 color=&ldquo#9999ff&ldquo><center>" + "ご注文金額は " 
+     + kotae + " 円です。</center></font>";
+}
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffcc">
+  <center>
+  <h1>
+  双方向（インタラクティブ）のホームページ<br>
+  </h1>
+  </center>
+  <br>
+  <form name="f1" id="f1">
+　　背&nbsp景&nbsp色&nbsp選&nbsp択：
+  <input name="rdoiro" id="rdoiro" type="radio" value="0" checked onClick="rdoiro_changed();" >
+水　色　　
+  <input name="rdoiro" id="rdoiro" type="radio" value="1" onClick="rdoiro_changed();" >桃　色　　
+  <input name="rdoiro" id="rdoiro" type="radio" value="2" onClick="rdoiro_changed();" >黄緑色　　
+  <input name="rdoiro" id="rdoiro" type="radio" value="3" onClick="rdoiro_changed();" >クリーム色<br>
+  <br>
+  <div name="divKotae" id="divKotae"></div>
+  <br>
+　　注&nbsp文&nbsp選&nbsp択&nbsp&nbsp：
+  <select id="slctChuumon">
+    <option value="500">オムライス</option>
+    <option value="800">ハンバーグランチ</option>
+    <option value="600">スパゲッティー</option>
+    <option value="700" >カツ丼</option>
+  </select>
+  <br>
+  <br>
+　　　個　　数　　：&nbsp&nbsp&nbsp<input id="txtKosuu" type="text" size="5" value="1" >&nbsp個<br>
+  <br>
+　　税込みチェック：<input name="chkZei" type="checkbox" value="bumbougu"><br>
+  <br>
+　　　　<input id="btnJikkou" type="button" value="合図ボタン" onClick="btnJikkou_onClick();" >　　　　
+  <input type="reset" value="元通りボタン" onClick="location.reload();">
+  <br>
+  <br>
+　　<input type="button" value="前のページへ戻る" onclick="history.back()">
+</form>
+
+</body>
+</html>

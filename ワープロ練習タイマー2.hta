@@ -1,0 +1,98 @@
+<html><head><title>ワープロ用タイマー</title>
+<hta:application id="WTimer10" Applicationname="WTimer10"
+	BORDERSTYLE="dialog"
+	MAXIMIZEBUTTON="no"
+	VERSION="1.0"
+	WINDOWSTATE="normal" />
+<meta http-equiv="Content-Type" content="text/html: charset=Shift_JIS">
+<script language="VBS">
+Option Explicit
+Dim t,objIE,tNokori
+Call Window.ResizeTo(350,400)
+Sub Initialize1()
+	If f1.TRange.value >=0 then
+		f1.TEnd.value=dateAdd("S",f1.TRange.value,Time())
+	Else
+		f1.TEnd.value=dateAdd("S",f1.SiteiSecond.value,Time())
+	End If
+	f1.time0.value="" & Time() & " 開始 " & f1.TEnd.value & " まで"
+	f1.time1.value="" & Time() & " 開始 " & f1.TRange.value & " 分間"
+	msg1.innerText = ""
+End Sub
+
+Sub TimerPro()
+	tNokori=DateDiff("S",time(),f1.TEnd.value)
+	If tNokori>=0 then
+		f1.time1.value="残り : " & (tNokori \ 60) & " 分 " & (tNokori Mod 60) & " 秒"
+	  Else
+		ClearInterval(t)
+		msg1.innerHTML = "<b><font size=7 color='yellow'>　終わりです</font></b>"
+		OwariMsg()
+'		MsgBox("終了時間です！")
+		If Document.All("chkBeep").checked Then
+		  CallBeep()
+		End If
+	End If
+End Sub
+
+Sub OwariMsg()
+	Set objIE = CreateObject("InternetExplorer.Application")
+	objIE.Visible = true
+	objIE.Width = 300
+	objIE.Height = 400
+	objIE.Navigate("about:blank")
+	objIE.Document.Write("<html><body bgcolor='lightcyan'>")
+	objIE.Document.Write("終わりです<br>次どうぞ<br>")
+	objIE.Document.Write("</body></html>")
+	Set objIE = Nothing
+End Sub
+
+Sub CallBeep()
+	Dim wshShell,beep1,cnt1
+	set wshShell = CreateObject("wscript.Shell")
+	beep1 = chr(007)
+	For cnt1 = 1 to 8
+	  wshShell.Run "cmd /c @echo " & beep1, 0
+	Next
+	Set wshShell = Nothing
+End Sub
+
+Sub TStart_onClick
+	Initialize1()
+	ClearInterval(t)
+	t = SetInterval("TimerPro()",10)
+End Sub
+
+</script>
+
+<style type="text/css">
+ body {margin: 20px; overflow: hidden; background: #FFFFCC>
+ form {font : midium}
+ .TStart {border : oustset 6px; background : #CCCCCC; margin-left:40px}
+</style>
+</head>
+<body bgcolor="deepskyblue">
+<h3 align="center" >ワープロ練習タイマー</h3><br>
+<form id="f1">
+	<input id="TEnd" type="hidden" value="0">
+	計測時間：
+<select id="TRange">
+	<option value="600">10分間</option>
+	<option value="900">15分間</option>
+	<option value="120">20分間</option>
+	<option value="300">5分間</option>
+	<option value="60">1分間</option>
+	<option value="5">5秒間</option>
+	<option value="-1">下に指定した秒数</option>
+</select>
+<br><br>
+　　　　　　　<input id="SiteiSecond" type="text" value=""size="14">秒間
+<br><br>
+	開始時刻：<input id="time0" type="text" value="0" size="28"><br><br>
+	時　　刻：<input id="time1" type="text" value="0" size="20"><br><br>
+	<input id="TStart" type="button" value="スタート">
+　　　　ブザー鳴らす：<input name="chkBeep" type="checkbox" value="BeepOff"><br>
+<br>
+</form>
+<div id="msg1"></div>
+</body></html>
