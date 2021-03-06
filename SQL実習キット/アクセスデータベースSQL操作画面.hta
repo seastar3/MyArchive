@@ -1,0 +1,76 @@
+<html>
+<head>
+  <title>アクセスデータベースSQL操作ページ</title>
+  <HTA:APPLICATION SHOWINTASKABAR="no"
+                   WINDOWSSTATE="maximize" />
+    <style type="text/css">
+        #Text1
+        {
+            margin-bottom: 0px;
+        }
+        #MdbFile1
+        {
+            height: 19px;
+        }
+    </style>
+   <script language="vbscript">
+    <!--
+'  ACCESSデータベースSQL操作ページ
+'  開発日　平成21年10月5日
+'  開発者　海星  E-mail:seastar@orion.nifty.jp
+'  copyright 2009 Hitode all rights reserved
+    Option Explicit
+    On Error Resume Next
+    Dim DBPath,SQL1
+    Dim Dbmei
+    Err.Clear
+    DBMei="取引.mdb"
+Sub load1()
+    DBMei="取引.mdb"
+    With CreateObject("Scripting.FileSystemObject")
+    	DBPath = .GetFolder(".").path & "\" & DBMei
+    End With
+'	msgbox DBPath
+    Form1.MdbFile1.value = DBPath
+End Sub
+
+Sub Syori()
+'  DBMei=form1.MdbFile1.value
+' 取引データベース
+  With CreateObject("Scripting.FileSystemObject")
+	DBPath = form1.MdbFile1.value
+  End With
+  With CreateObject("ADODB.Connection")
+	.Provider = "Microsoft.Jet.OLEDB.4.0"
+	.Open DBPath
+' ＳＱＬ文の代入
+'	SQL1 = "SELECT * FROM 現金出納帳テーブル WHERE 日付<DateSerial(2009,12,31);"
+    SQL1 = form1.TextSQL1.Value
+'	MsgBox .Execute(SQL1).GetString(, , , vbLf)
+	document.getElementById("SQL-Kekka").innerText = .Execute(SQL1).GetString(, , , vbLf)
+    If Err.Number<>0 Then MsgBox Err.Description,,"ＳＱＬ実行時エラー"
+	.Close
+  End With
+End Sub
+Sub JikkouButton1_onClick
+    Syori()
+End Sub
+   </script> 
+</head>
+<body onLoad="load1()" bgcolor="#FFFFCC">
+  <h1 align="center">アクセスデータベースSQL操作ページ</h1>
+<form id="Form1">
+<p>
+　操作するアクセスデータベースファイルのパス　<br />
+    <input id="MdbFile1" type="file" size="120" /></p>
+<p>
+　実行させたいＳＱＬ命令　<br />
+    <textarea id="TextSQL1" cols="80" name="TextSQL1" rows="10"></textarea></p>
+<p>
+    <input id="JikkouButton1" type="button" value="　ＳＱＬ実行　" /></p>
+</form>
+<div id="SQL-Kekka">
+ここに結果を表示します。
+</div>
+</body>
+</html>
