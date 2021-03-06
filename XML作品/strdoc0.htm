@@ -1,0 +1,332 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=x-sjis">
+<title>記録データのデータ構造の説明（COBOL式、ＤＴＤ式、グラフィック表現式）</title>
+</head>
+
+<body bgcolor="#FFFFB9">
+
+<h1 align="center"><font color="#800080">記録データのデータ構造の説明</font></h1>
+
+<h1 align="center"><font color="#800080">（COBOL式、ＤＴＤ式、グラフィック表現式）</font></h1>
+
+<p style="margin-left: 6px; margin-right: 12px">私が設計したこの伝票綴.XMLのデータ形式を説明します。<br>
+　まず、古典的にCOBOLのデータ部のように表現すれば、</p>
+
+<h3 align="center" style="color: rgb(0,0,128)">伝票綴のデータ構造のＣＯＢＯＬ式の表現 
+</h3>
+<div align="center"><center>
+
+<table border="1" width="613">
+  <tr>
+    <td width="607"><p style="color: rgb(0,0,128); margin-left: 16px"><br>
+    <strong>FD&nbsp;&nbsp;&nbsp; 伝票綴.<br>
+    DATA RECORD IS 伝票.<br>
+    01&nbsp;&nbsp;&nbsp; 伝票.<br>
+    &nbsp;&nbsp;&nbsp; 02&nbsp;&nbsp;&nbsp; 前付.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 03&nbsp;&nbsp;&nbsp; 伝票番号 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC 9(3).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 03&nbsp;&nbsp;&nbsp; 日付 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC X(10).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 03&nbsp;&nbsp;&nbsp; 稟議フラグ 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC X(1).<br>
+    &nbsp;&nbsp;&nbsp; 02&nbsp;&nbsp;&nbsp; 明細.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 03&nbsp;&nbsp;&nbsp; 借方 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    OCCURS 3.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    勘定科目コード&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(4).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    勘定科目 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(30).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    金額 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC 9(12).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    摘要 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC X(100).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    相手先部.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 相手先フラグ&nbsp;&nbsp;&nbsp; PIC X(1).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 相手先コード&nbsp;&nbsp;&nbsp; PIC 9(3).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 相手先 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(50).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    商品部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OCCURS 3.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 商品フラグ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(1).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 商品コード&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(8).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 商品 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(50).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 単価 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(12).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 数量 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(5).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 金額 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(12).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 03&nbsp;&nbsp;&nbsp; 貸方 &nbsp;&nbsp;&nbsp; 
+    OCCURS 3.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    勘定科目コード&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(4).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    勘定科目 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(30).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    金額 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC 9(12).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    摘要 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC X(100).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    相手先部.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 相手先フラグ&nbsp;&nbsp;&nbsp; PIC X(1).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 相手先コード&nbsp;&nbsp;&nbsp; PIC 9(3).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 相手先 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(50).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 04 &nbsp;&nbsp;&nbsp; 
+    商品部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OCCURS 3.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 商品フラグ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(1).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 商品コード&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(8).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 商品 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC X(50).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 単価 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(12).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 数量 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(5).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    05 &nbsp;&nbsp;&nbsp; 金額 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PIC 9(12).<br>
+    &nbsp;&nbsp;&nbsp; 02&nbsp;&nbsp;&nbsp; 後付.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 03&nbsp;&nbsp;&nbsp; FILLER 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    PIC X(10).</strong><br>
+    </td>
+  </tr>
+</table>
+</center></div>
+
+<p style="margin-left: 6px; margin-right: 12px">　以上のようになります。<br>
+　一応、勘定の諸口の回数と商品の種類は３回以内とみなして、記述していますが、XMLの場合は、&lt;借方&gt;～&lt;/借方&gt; 
+や &lt;貸方&gt;～&lt;/貸方&gt; や &lt;商品部&gt;～&lt;/商品部&gt; 
+のように囲んでおけば、要素がないときは省略してもよいし、いくつもあるときには何回分でも並べることができます。<br>
+　だから、逆にCOBOLの場合は、OCCURS句の回数指定を増やせば対応ができます。ただし、ネットワークの先の別の利用者が元の「OCCURS 
+3」のままで読み取ろうとすれば、レコードが正しく読みとれないエラーが発生するでしょう。この点で、COBOLのような固定長レコードは融通が利かないことが指摘できます。<br>
+<br>
+　次に伝票綴.XMLのデータ構造をグラフィック表現で表記してみます。<br>
+　なお、独特の記号として、?は１回あるかないか、+は１回以上ある、*は０回以上あることを示します。また、-&gt;は下の要素が左から順番通りに出てくることの指定です。そして、何も記号をつけていない要素は必ず１回ということを意味します。<br>
+</p>
+
+<h3 align="center" style="color: rgb(0,0,128)">伝票綴.XMLのデータ構造のグラフィック表現 
+</h3>
+<div align="center"><center>
+
+<table border="1" width="800pxl" style="color: rgb(128,0,0)">
+  <tr>
+    <td width="100%"><p style="margin-left: 30"><img src="dpstrcht.gif" width="681"
+    height="823" alt="dpstrcht.gif (10708 バイト)"></td>
+  </tr>
+</table>
+</center></div>
+
+<p><br>
+　以上がグラフィック表現です。COBOLの表記が各フィールド名を下の行に書き加えていくのに対して、XMLのグラフィック表現は、各要素を横に並べて、線で結んで階層構造を表現します。<br>
+　そして、この各要素の親子関係を考慮しながら、データの抽出や整列や集計をしていきます。<br>
+<br>
+　そして、第３番目にXML文書の文書型定義DTD(Document Type Definition)の記述を挙げます。XML文書はタグの入れ子に矛盾がなければ、このDTDがなくても使えますが、一応、COBOLの記述と対比してみると興味深いと思います。<br>
+<br>
+</p>
+
+<h3 style="color: rgb(0,0,128)" align="center">伝票綴.XMLのＤＴＤ</h3>
+<div align="center"><center>
+
+<table border="1" width="811" bordercolor="#800000">
+  <tr>
+    <td width="805" style="margin-left: 10px"><p style="margin-left: 10px"><br>
+    &lt;!DOCTYPE 伝票綴&gt;<br>
+    &lt;!ELEMENT 伝票綴 (伝票*)&gt;<br>
+    &lt;!ELEMENT 伝票 (前付,明細,後付?)&gt;<br>
+    &lt;!ELEMENT 前付 (伝票番号,日付,稟議フラグ?)&gt;<br>
+    &lt;!ELEMENT 伝票番号 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 日付 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 稟議フラグ (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 明細 (借方+,貸方+)&gt;<br>
+    &lt;!ELEMENT 借方 (勘定科目コード?,勘定科目,金額,摘要,相手先部?,商品部*)&gt;<br>
+    &lt;!ELEMENT 勘定科目コード (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 勘定科目 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 金額 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 摘要 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 相手先部 (相手先フラグ?,相手先コード?,相手先)&gt;<br>
+    &lt;!ELEMENT 相手先フラグ (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 相手先コード (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 相手先 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 商品部 (商品フラグ?,商品コード?,商品,単価,数量,金額)&gt;<br>
+    &lt;!ELEMENT 商品フラグ (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 商品コード (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 商品 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 単価 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 数量 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 金額 (#PCDATA)&gt;<br>
+    &lt;!ELEMENT 貸方 (勘定科目コード?,勘定科目,金額,摘要,相手先部?,商品部*)&gt;<br>
+    &lt;!ELEMENT 後付 EMPTY&gt;<br>
+    &lt;!-- 後付部分が発生したら追加する。 &lt;!ELEMENT 後付 (#PCDATA)&gt; 
+    --&gt;<br>
+    &lt;ATTLIST 伝票 伝票区分 (仕訳伝票|振替伝票|入金伝票|出金伝票|仕入伝票|売上伝票|受取手形伝票|支払手形伝票) 
+    #IMPLIED&gt;<br>
+    &lt;ATTLIST 貸方 諸口勘定科目数 CDATA #IMPLIED&gt;<br>
+    &lt;!-- 借方も貸方も仕訳単子として扱う使用の場合に追加する。 
+    &lt;ATTLIST 仕訳単子 貸借区分 (借方|貸方) #REQUIRED&gt; --&gt;<br>
+    </td>
+  </tr>
+</table>
+</center></div>
+
+<p>　以上です。このDTDの終わり４行分の属性指定は、いずれ伝票の形式を５伝票制に対応するように変形できるようにするために追加しています。<br>
+　また、借方と貸方の形式が同一ということは、仕訳単子という集合要素を決めて、その属性に借方か貸方を示す貸借区分を付加すれば、もっと簡潔になるはずです。<br>
+　また、手形処理の要素は省略していますので、より汎用性を持たせるには、手形処理用の要素を組み込んだ方がよいでしょう。ただ、別に実用化するあてはないのですが。</p>
+
+<p>　</p>
+
+<h3 style="color: rgb(0,0,128)" align="center">伝票綴.XMLの表記例</h3>
+
+<p style="margin-left: 12px">　これにより、具体的に取引の記録をＸＭＬ形式で表記すると、下のような例になります。紫色の部分が伝票綴ＸＭＬで決めたタグです。ＨＴＭＬに似て見えるでしょう。また、緑色の部分が個々のデータで、任意の値が入ります。はさむもののないタグを取り除いても、うまく働きます。<br>
+　これは、<font color="#008000"><strong>「バーゲン本舗へ単価\150,0000のノートパソコン２台を当座預金振込で売上げた」</strong></font>という取引を表現しています。<br>
+　ＸＭＬファイルのソースコードを表示してもらえば分かりますが、すべてのＸＭＬファイルの内容は同じです。ただ、第２行目で指定しているスタイルシートを換えることで、編集方法の違う表記をします。データそのものにすでに集計表の足掛かりが用意されているのです。<br>
+　試しにブラウザ上のＵＲＬ表記の拡張子を(*．ＸＭＬ) から (*．ＸＳＬ)に打ち換えてスタイルシートを表記してみれば、集計表示するために各項目の階層構造を厳密に表記しながら集計関数や整列の指定をしていることを見ることができます。</p>
+<div align="center"><center>
+
+<table border="1" width="816" bordercolor="#6C0000">
+  <tr>
+    <td width="1516"><p style="margin-left: 12px"><font color="#800080"><br>
+    　&lt;!-- </font><font color="#008000">9/16 当座預金 300,000 / 売　上 300,000</font><font
+    color="#800080"> --&gt;<br>
+    &lt;伝票&gt;<br>
+    &nbsp;&nbsp;&nbsp; &lt;前付&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;伝票番号&gt;</font><font
+    color="#008000">6</font><font color="#800080">&lt;/伝票番号&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;日付&gt;</font><font color="#008000">2002/09/16</font><font
+    color="#800080">&lt;/日付&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;稟議フラグ&gt;&lt;/稟議フラグ&gt;<br>
+    &nbsp;&nbsp;&nbsp; &lt;/前付&gt;<br>
+    <br>
+    &nbsp;&nbsp;&nbsp; &lt;明細&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;借方&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;勘定科目コード&gt;</font><font
+    color="#008000">2</font><font color="#800080">&lt;/勘定科目コード&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;勘定科目&gt;</font><font
+    color="#008000">当座預金</font><font color="#800080">&lt;/勘定科目&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;金額&gt;</font><font
+    color="#008000">300000</font><font color="#800080">&lt;/金額&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;摘要&gt;</font><font
+    color="#008000">バーゲン本舗へ販売したノートパソコン２台の代金</font><font
+    color="#800080">&lt;/摘要&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;相手先部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;相手先フラグ&gt;</font><font color="#008000">1</font><font color="#800080">&lt;/相手先フラグ&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;相手先コード&gt;</font><font color="#008000">1</font><font color="#800080">&lt;/相手先コード&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;相手先&gt;</font><font color="#008000">開運銀行</font><font color="#800080">&lt;/相手先&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/相手先部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;商品部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;商品フラグ&gt;&lt;/商品フラグ&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;商品コード&gt;&lt;/商品コード&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;商品&gt;&lt;/商品&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;単価&gt;&lt;/単価&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;数量&gt;&lt;/数量&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;金額&gt;&lt;/金額&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/商品部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/借方&gt;<br>
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;貸方&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;勘定科目コード&gt;</font><font
+    color="#008000">13</font><font color="#800080">&lt;/勘定科目コード&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;勘定科目&gt;</font><font
+    color="#008000">売上</font><font color="#800080">&lt;/勘定科目&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;金額&gt;</font><font
+    color="#008000">300000</font><font color="#800080">&lt;/金額&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;摘要&gt;</font><font
+    color="#008000">大和電業へノートパソコン２台を当座預金振込で売上げ</font><font
+    color="#800080">&lt;/摘要&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;相手先部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;相手先フラグ&gt;</font><font color="#008000">1</font><font color="#800080">&lt;/相手先フラグ&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;相手先コード&gt;</font><font color="#008000">4</font><font color="#800080">&lt;/相手先コード&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;相手先&gt;</font><font color="#008000">バーゲン本舗</font><font
+    color="#800080">&lt;/相手先&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/相手先部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;商品部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;商品フラグ&gt;</font><font color="#008000">1</font><font color="#800080">&lt;/商品フラグ&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;商品コード&gt;</font><font color="#008000">1</font><font color="#800080">&lt;/商品コード&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;商品&gt;</font><font color="#008000">ノートパソコン</font><font
+    color="#800080">&lt;/商品&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;単価&gt;</font><font color="#008000">150000</font><font color="#800080">&lt;/単価&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;数量&gt;</font><font color="#008000">2</font><font color="#800080">&lt;/数量&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &lt;金額&gt;</font><font color="#008000">300000</font><font color="#800080">&lt;/金額&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/商品部&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/貸方&gt;<br>
+    &nbsp;&nbsp;&nbsp; &lt;/明細&gt;<br>
+    <br>
+    &nbsp;&nbsp;&nbsp; &lt;後付&gt;<br>
+    &nbsp;&nbsp;&nbsp; &lt;/後付&gt;<br>
+    &lt;/伝票&gt;<br>
+    </font></td>
+  </tr>
+</table>
+</center></div>
+
+<p>　</p>
+
+<p>　構想としては、伝票XML自動編集Webページを開発するつもりです。仕訳伝票風のWebページの各フィールドに入力すれば、伝票の下の枠に入力したとおりの１件分の伝票XMLが自動的に編集されて表示されるWebページです。JavaScriptを組み込めば、フロッピーディスクからでもブラウザに呼び出せて使えるでしょう。<br>
+</p>
+
+<p><br>
+<br>
+</p>
+
+<form>
+  <div align="center"><center><p><input type="button" value="前のページへ戻る"
+  onclick="history.back()" style="padding-top: 10px; padding-bottom: 10px"> </p>
+  </center></div>
+</form>
+
+<p><br>
+<br>
+</p>
+</body>
+</html>

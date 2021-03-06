@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>伝票一葉表示ページ</title>
+<script type="text/vbscript">
+<!--
+option explicit
+dim xmldoc
+dim currentnode
+dim tuginode,maenode
+dim no
+dim dempyouNode
+dim bangou
+
+sub window_onload()
+  no = 0
+  set xmldoc = CreateObject("Microsoft.XMLDom")
+  xmldoc.async = false
+  xmldoc.load(".\dpnode0.xml")
+  set dempyouNode = xmldoc.getElementsByTagName("伝票")
+  bangou = dempyouNode.length - 1
+  set currentnode = xmldoc.ChildNodes.item(1).ChildNodes.item(1)
+  set maenode = currentnode.previousSibling
+  displayArea.innertext = maenode.xml
+end sub
+
+sub gomae()
+  if no <= 0 then
+    msgbox "これより前のデータはありません。"
+    no = 1
+    exit sub
+  else
+    call maeaccess()
+    no = no - 1
+  end if
+end sub
+
+sub gotugi()
+  if no >= bangou  then
+    msgbox "これ以上のデータはありません。"
+	no = bangou
+    exit sub
+  else
+    call nextaccess()
+    no = no + 1
+  end if
+end sub
+
+sub nextaccess()
+  Set currentnode = xmldoc.ChildNodes.item(1).ChildNodes.item(no)
+  Set tuginode = currentnode.nextSibling
+  displayArea.innertext = tuginode.xml
+end sub
+
+sub maeaccess()
+	set currentnode = xmldoc.ChildNodes.item(1).ChildNodes.item(no)
+	set maenode = currentnode.previousSibling
+	displayArea.innertext =  maenode.xml
+end sub
+
+-->
+</script>
+</head>
+<body>
+<div>
+  <button id="mae"  style="font-size:16pt" onclick="gomae()" >前のデータ</button>
+  <button id="tugi" style="font-size:16pt" onclick="gotugi()">次のデータ</button>
+</div>
+<div id="displayArea" style="width:1550;padding:20;font-size:12pt">
+</div>
+</body>
+</html>

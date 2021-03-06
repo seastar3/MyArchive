@@ -1,0 +1,353 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>伝票登録プロトタイプ1</title>
+<script language="JavaScript">
+<!--
+	function makeXml(){
+strnaiyou = "<伝票><br>";
+strnaiyou += "&nbsp;&nbsp;<前付><br>&nbsp;&nbsp;&nbsp;&nbsp;<伝票番号>";
+strnaiyou += document.frm_maetuke.txt_denban.value + "&lt;\/伝票番号><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;<日付>" + document.frm_maetuke.txt_nen.value + "/"+ document.frm_maetuke.txt_tuki.value + "/" + document.frm_maetuke.txt_hi.value + "&lt;\/日付><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;<稟議フラグ>"
+strnaiyou += document.frm_maetuke.pswd_ringi.value + "&lt;\/稟議フラグ><br>";
+strnaiyou += "&nbsp;&nbsp;&lt;\/前付><br>";
+
+strnaiyou += "&nbsp;&nbsp;<明細><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;<借方><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<勘定科目コード>";
+strnaiyou += document.frm_meisai.txt_db_accd1.value + "&lt;\/勘定科目コード><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<勘定科目>";
+strnaiyou += document.frm_meisai.txt_db_ac1.value + "&lt;\/勘定科目><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<金額>"
+strnaiyou += document.frm_meisai.txt_db_gaku1.value + "&lt;\/金額><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<摘要>";
+strnaiyou += document.frm_meisai.txt_db_memo.value + "&lt;\/摘要><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先部><br>";
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先フラグ>";
+if (document.frm_meisai.chk_db_aite.checked) 
+	{strnaiyou += "あり&lt;\/相手先フラグ><br>";}
+else 	{strnaiyou += "&lt;\/相手先フラグ><br>";}
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先コード>";
+strnaiyou += document.frm_meisai.txt_db_aitecd.value + "&lt;\/相手先コード><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先>";
+strnaiyou += document.frm_meisai.txt_db_aitesaki.value + "&lt;\/相手先><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;\/相手先部><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品部><br>";
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品フラグ>";
+if (document.frm_shohinbu.chk_db_shohin.checked) {
+	strnaiyou += "あり&lt;\/商品フラグ><br>";
+}
+else 	{strnaiyou += "&lt;\/商品フラグ><br>";}
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品コード>";
+strnaiyou += document.frm_shohinbu.txt_db_shocd1.value + "&lt;\/商品コード><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品>";
+strnaiyou += document.frm_shohinbu.txt_db_sho1.value + "&lt;\/商品><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<単価>";
+strnaiyou += document.frm_shohinbu.txt_db_sho_tanka1.value + "&lt;\/単価><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<数量>";
+strnaiyou += document.frm_shohinbu.txt_db_sho_su1.value + "&lt;\/数量><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<金額>";
+strnaiyou += document.frm_shohinbu.txt_db_shogaku1.value + "&lt;\/金額><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;\/商品部><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&lt;\/借方><br>";
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;<貸方><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<勘定科目コード>";
+strnaiyou += document.frm_meisai.txt_cr_accd1.value + "&lt;\/勘定科目コード><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<勘定科目>";
+strnaiyou += document.frm_meisai.txt_cr_ac1.value + "&lt;\/勘定科目><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<金額>"
+strnaiyou += document.frm_meisai.txt_cr_gaku1.value + "&lt;\/金額><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<摘要>";
+strnaiyou += document.frm_meisai.txt_cr_memo.value + "&lt;\/摘要><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先部><br>";
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先フラグ>";
+if (document.frm_meisai.chk_cr_aite.checked) 
+	{strnaiyou += "あり&lt;\/相手先フラグ><br>";}
+else 	{strnaiyou += "&lt;\/相手先フラグ><br>";}
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先コード>";
+strnaiyou += document.frm_meisai.txt_cr_aitecd.value + "&lt;\/相手先コード><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<相手先>";
+strnaiyou += document.frm_meisai.txt_cr_aitesaki.value + "&lt;\/相手先><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;\/相手先部><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品部><br>";
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品フラグ>";
+if (document.frm_shohinbu.chk_cr_shohin.checked) {
+	strnaiyou += "あり&lt;\/商品フラグ><br>";
+}
+else 	{strnaiyou += "&lt;\/商品フラグ><br>";}
+
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品コード>";
+strnaiyou += document.frm_shohinbu.txt_cr_shocd1.value + "&lt;\/商品コード><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<商品>";
+strnaiyou += document.frm_shohinbu.txt_cr_sho1.value + "&lt;\/商品><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<単価>";
+strnaiyou += document.frm_shohinbu.txt_cr_sho_tanka1.value + "&lt;\/単価><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<数量>";
+strnaiyou += document.frm_shohinbu.txt_cr_sho_su1.value + "&lt;\/数量><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<金額>";
+strnaiyou += document.frm_shohinbu.txt_cr_shogaku1.value + "&lt;\/金額><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;\/商品部><br>";
+strnaiyou += "&nbsp;&nbsp;&nbsp;&nbsp;&lt;\/貸方><br>";
+strnaiyou += "&nbsp;&nbsp;&lt;\/明細><br>";
+strnaiyou += "&nbsp;&nbsp;<後付>&lt;\/後付><br>";
+strnaiyou += "&lt;\/伝票><br>";
+
+	RegNaiyou = new RegExp("\s*<(.{2,8})>&lt;\/.{2,8}><br>","g");
+	strResNaiyou = strnaiyou.replace(RegNaiyou,"");
+	document.getElementById("div_xml1").innerHTML=strResNaiyou;
+	}
+
+<!--  空欄のタグを掃除する正規表現　まだ試験中
+document.getElementById("div_xml1").innerHTML=strnaiyou;
+-->
+
+
+// -->
+</script>
+
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 16px;
+	color: #000033;
+}
+body {
+	background-color: #CCFF00;
+}
+.style2 {font-size: 24px}
+.style3 {font-size: 36px}
+.style4 {font-size: 24px; color: #0033CC; }
+-->
+</style>
+
+
+</head>
+
+<body>
+<p align="center" class="style1"><span class="style3">ＸＭＬ仕訳伝票入力画面1</span>（テキストエリア表示）</p>
+<table width="1122" border="1">
+  <tr>
+    <td width="744" height="59">&nbsp;</td>
+    <td width="362"><form action="" method="post" name="frm_maetuke" id="frm_maetuke">
+  伝票番号：
+      <input name="txt_denban" type="text" id="txt_denban" value="０" size="１２" maxlength="６">      
+      <br>
+  日付：
+  <input name="txt_nen" type="text" id="txt_nen" value="2006" size="８" maxlength="４">
+  年　
+  <input name="txt_tuki" type="text" id="txt_tuki" value="１" size="4" maxlength="2">
+  月　
+  <input name="txt_hi" type="text" id="txt_hi" value="１" size="４" maxlength="２">
+  日<br>
+  稟議フラグ：  
+  <input name="pswd_ringi" type="password" id="pswd_ringi" value="1111" size="10" maxlength="4">
+  (稟議者のバスワード4文字以内)<br>
+    </form></td>
+  </tr>
+</table>
+<form action="" method="post" name="frm_meisai" id="frm_meisai">
+  <table width="1090" border="1">
+    <tr valign="middle">
+      <th colspan="5" scope="col">借方</th>
+      <th colspan="5" scope="col">貸　方</th>
+    </tr>
+    <tr valign="middle">
+      <td colspan="2"><div align="center">勘定科目コード</div></td>
+      <td colspan="2"><div align="center">勘定科目</div></td>
+      <td width="155"><div align="center">金額</div></td>
+      <td colspan="2"><div align="center">勘定科目コード</div></td>
+      <td colspan="2"><div align="center">勘定科目</div></td>
+      <td width="168"><div align="center">金額</div></td>
+    </tr>
+    <tr valign="middle">
+      <td colspan="2"><input name="txt_db_accd1" type="text" id="txt_db_accd1"></td>
+      <td colspan="2"><input name="txt_db_ac1" type="text" id="txt_db_ac1"></td>
+      <td><input name="txt_db_gaku1" type="text" id="txt_db_gaku1"></td>
+      <td colspan="2"><input name="txt_cr_accd1" type="text" id="txt_cr_accd1"></td>
+      <td colspan="2"><input name="txt_cr_ac1" type="text" id="txt_cr_ac1"></td>
+      <td><input name="txt_cr_gaku1" type="text" id="txt_cr_gaku1"></td>
+    </tr>
+    <tr valign="middle">
+      <td colspan="2"><input name="txt_db_accd2" type="text" id="txt_db_accd2"></td>
+      <td colspan="2"><input name="txt_db_ac2" type="text" id="txt_db_ac2"></td>
+      <td><input name="txt_db_gaku2" type="text" id="txt_db_gak21"></td>
+      <td colspan="2"><input name="txt_cr_accd2" type="text" id="txt_cr_accd2"></td>
+      <td colspan="2"><input name="txt_cr_ac2" type="text" id="txt_cr_ac2"></td>
+      <td><input name="txt_cr_gaku2" type="text" id="txt_cr_gaku2"></td>
+    </tr>
+    <tr valign="middle">
+      <td colspan="2"><input name="txt_db_accd4" type="text" id="txt_db_accd3"></td>
+      <td colspan="2"><input name="txt_db_ac4" type="text" id="txt_db_ac3"></td>
+      <td><input name="txt_db_gaku4" type="text" id="txt_db_gaku3"></td>
+      <td colspan="2"><input name="txt_cr_accd4" type="text" id="txt_cr_accd3"></td>
+      <td colspan="2"><input name="txt_cr_ac4" type="text" id="txt_cr_ac3"></td>
+      <td><input name="txt_cr_gaku4" type="text" id="txt_cr_gaku3"></td>
+    </tr>
+    <tr valign="middle">
+      <td height="35"><div align="center">相手方フラグ
+          <input name="chk_db_aite" type="checkbox" id="chk_db_aite" value="checkbox">
+      </div></td>
+      <td width="82"><div align="center">相手方コード</div></td>
+      <td width="127"><input name="txt_db_aitecd" type="text" id="txt_db_aitecd" size="10" maxlength="4"></td>
+      <td width="87"><div align="center">相手先</div></td>
+      <td><input name="txt_db_aitesaki" type="text" id="txt_db_aitesaki" size="40" maxlength="20"></td>
+      <td><div align="center">相手方フラグ
+          <input name="chk_cr_aite" type="checkbox" id="chk_cr_aite" value="checkbox">
+      </div></td>
+      <td width="97">相手方コード</td>
+      <td width="55"><input name="txt_cr_aitecd" type="text" id="txt_cr_aitecd" size="10" maxlength="4"></td>
+      <td width="101"><div align="center">相手先</div></td>
+      <td><input name="txt_cr_aitesaki" type="text" id="txt_cr_aitesaki" size="40" maxlength="20"></td>
+    </tr>
+    <tr valign="middle">
+      <td width="78" height="55"><div align="center">摘要</div></td>
+      <td colspan="4" valign="top"><textarea name="txt_db_memo" cols="80" id="txt_db_memo"></textarea></td>
+      <td width="78"><div align="center">摘要</div></td>
+      <td colspan="4" valign="top"><textarea name="txt_cr_memo" cols="80" id="txt_cr_memo"></textarea></td>
+    </tr>
+  </table>
+</form>
+<form action="" method="post" name="frm_atotuke" id="frm_atotuke">
+</form>
+<p><br>
+仕入勘定や売上勘定の際にポップアップさせる商品用のフォーム部</p>
+<form action="" method="post" name="frm_shohinbu" id="frm_shohinbu">
+  <table border="1">
+    <tr valign="middle">
+      <th colspan="5" scope="col">借方</th>
+      <th colspan="5" scope="col">貸　方</th>
+    </tr>
+    <tr>
+      <th width="57"  scope="col"><span class="style2"></span></th>
+      <th width="120"  scope="col">商品フラグ：      
+      <input name="chk_db_shohin" type="checkbox" id="chk_db_shohin" value="checkbox"></th>
+      <th colspan="2" scope="col">伝票番号：
+        <input name="txt_db_sh_denban" type="text" id="txt_db_sh_denban" value="０" size="１２" maxlength="６"></th>
+      <th width="155"  scope="col"><div align="left"><br>
+          <input name="txt_db_sh_nen" type="text" id="txt_db_sh_nen" value="2006" size="7" maxlength="４">
+          年
+<input name="txt_db_sh_tuki" type="text" id="txt_db_sh_tuki" value="12" size="4" maxlength="2">
+月
+<input name="txt_db_sh_hi" type="text" id="txt_db_sh_hi" value="１" size="４" maxlength="２">
+日<br>
+</div></th>
+      <th width="54"  scope="col">&nbsp;</th>
+      <th width="120"  scope="col">商品フラグ：
+          <input name="chk_cr_shohin" type="checkbox" id="chk_cr_shohin" value="checkbox"></th>
+      <th colspan="2" scope="col">伝票番号：
+          <input name="txt_cr_sh_denban" type="text" id="txt_cr_sh_denban" value="０" size="１２" maxlength="６"></th>
+      <th width="153"  scope="col"><div align="left">
+        <input name="txt_cr_sh_nen" type="text" id="txt_cr_sh_nen" value="2006" size="８" maxlength="４">
+        年
+        <input name="txt_cr_sh_tuki" type="text" id="txt_cr_sh_tuki" value="１" size="4" maxlength="2">
+        月
+        <input name="txt_cr_sh_hi" type="text" id="txt_cr_sh_hi" value="１" size="４" maxlength="２">
+    日<br>
+      </div></th>
+    </tr>
+    <tr>
+      <td><div align="center">商品コード</div></td>
+      <td><div align="center">商品</div></td>
+      <td width="101"  ><div align="center">単価</div></td>
+      <td width="80"  ><div align="center">数量</div></td>
+      <td><div align="center">金額</div></td>
+      <td><div align="center">商品コード</div></td>
+      <td><div align="center">商品</div></td>
+      <td width="102"  ><div align="center">単価</div></td>
+      <td width="80"  ><div align="center">数量</div></td>
+      <td><div align="center">金額</div></td>
+    </tr>
+    <tr>
+      <td><input name="txt_db_shocd1" type="text" id="txt_db_shocd1" size="10" maxlength="4"></td>
+      <td><input name="txt_db_sho1" type="text" id="txt_db_sho1"></td>
+      <td><input name="txt_db_sho_tanka1" type="text" id="txt_db_sho_tanka1" size="20" maxlength="8"></td>
+      <td><input name="txt_db_sho_su1" type="text" id="txt_db_sho_su1" size="16" maxlength="6"></td>
+      <td><input name="txt_db_shogaku1" type="text" id="txt_db_shogaku1"></td>
+      <td><input name="txt_cr_shocd1" type="text" id="txt_cr_shocd1" size="10" maxlength="4"></td>
+      <td><input name="txt_cr_sho1" type="text" id="txt_cr_sho1"></td>
+      <td><input name="txt_cr_sho_tanka1" type="text" id="txt_cr_sho_tanka1" size="20" maxlength="8"></td>
+      <td><input name="txt_cr_sho_su1" type="text" id="txt_cr_sho_su1" size="16" maxlength="6"></td>
+      <td><input name="txt_cr_shogaku1" type="text" id="txt_cr_shogaku1"></td>
+    </tr>
+    <tr>
+      <td><input name="txt_db_shocd2" type="text" id="txt_db_shocd2" size="10" maxlength="4"></td>
+      <td><input name="txt_db_sho2" type="text" id="txt_db_sho2"></td>
+      <td><input name="txt_db_sho_tanka2" type="text" id="txt_db_sho_tanka2" size="20" maxlength="8"></td>
+      <td><input name="txt_db_sho_su2" type="text" id="txt_db_sho_su2" size="16" maxlength="6"></td>
+      <td><input name="txt_db_shogaku2" type="text" id="txt_db_shogaku2"></td>
+      <td><input name="txt_cr_shocd2" type="text" id="txt_cr_shocd2" size="10" maxlength="4"></td>
+      <td><input name="txt_cr_sho2" type="text" id="txt_cr_sho2"></td>
+      <td><input name="txt_cr_sho_tanka2" type="text" id="txt_cr_sho_tanka2" size="20" maxlength="8"></td>
+      <td><input name="txt_cr_sho_su2" type="text" id="txt_cr_sho_su2" size="16" maxlength="6"></td>
+      <td><input name="txt_cr_shogaku2" type="text" id="txt_cr_shogaku2"></td>
+    </tr>
+    <tr>
+      <td><input name="txt_db_shocd3" type="text" id="txt_db_shocd3" size="10" maxlength="4"></td>
+      <td><input name="txt_db_sho3" type="text" id="txt_db_sho3"></td>
+      <td><input name="txt_db_sho_tanka3" type="text" id="txt_db_sho_tanka3" size="20" maxlength="8"></td>
+      <td><input name="txt_db_sho_su3" type="text" id="txt_db_sho_su3" size="16" maxlength="6"></td>
+      <td><input name="txt_db_shogaku3" type="text" id="txt_db_shogaku3"></td>
+      <td><input name="txt_cr_shocd3" type="text" id="txt_cr_shocd3" size="10" maxlength="4"></td>
+      <td><input name="txt_cr_sho3" type="text" id="txt_cr_sho3"></td>
+      <td><input name="txt_cr_sho_tanka3" type="text" id="txt_cr_sho_tanka3" size="20" maxlength="8"></td>
+      <td><input name="txt_cr_sho_su3" type="text" id="txt_cr_sho_su3" size="16" maxlength="6"></td>
+      <td><input name="txt_cr_shogaku3" type="text" id="txt_cr_shogaku3"></td>
+    </tr>
+    <tr>
+      <td><input name="txt_db_shocd4" type="text" id="txt_db_shocd4" size="10" maxlength="4"></td>
+      <td><input name="txt_db_sho4" type="text" id="txt_db_sho4"></td>
+      <td><input name="txt_db_sho_tanka4" type="text" id="txt_db_sho_tanka4" size="20" maxlength="8"></td>
+      <td><input name="txt_db_sho_su4" type="text" id="txt_db_sho_su4" size="16" maxlength="6"></td>
+      <td><input name="txt_db_shogaku4" type="text" id="txt_db_shogaku4"></td>
+      <td><input name="txt_cr_shocd4" type="text" id="txt_cr_shocd4" size="10" maxlength="4"></td>
+      <td><input name="txt_cr_sho4" type="text" id="txt_cr_sho4"></td>
+      <td><input name="txt_cr_sho_tanka4" type="text" id="txt_cr_sho_tanka4" size="20" maxlength="8"></td>
+      <td><input name="txt_cr_sho_su4" type="text" id="txt_cr_sho_su4" size="16" maxlength="6"></td>
+      <td><input name="txt_cr_shogaku4" type="text" id="txt_cr_shogaku4"></td>
+    </tr>
+    <tr>
+      <td><input name="txt_db_shocd5" type="text" id="txt_db_shocd5" size="10" maxlength="4"></td>
+      <td><input name="txt_db_sho5" type="text" id="txt_db_sho5"></td>
+      <td><input name="txt_db_sho_tanka5" type="text" id="txt_db_sho_tanka5" size="20" maxlength="8"></td>
+      <td><input name="txt_db_sho_su5" type="text" id="txt_db_sho_su5" size="16" maxlength="6"></td>
+      <td><input name="txt_db_shogaku5" type="text" id="txt_db_shogaku5"></td>
+      <td><input name="txt_cr_shocd5" type="text" id="txt_cr_shocd5" size="10" maxlength="4"></td>
+      <td><input name="txt_cr_sho5" type="text" id="txt_cr_sho5"></td>
+      <td><input name="txt_cr_sho_tanka5" type="text" id="txt_cr_sho_tanka5" size="20" maxlength="8"></td>
+      <td><input name="txt_cr_sho_su5" type="text" id="txt_cr_sho_su5" size="16" maxlength="6"></td>
+      <td><input name="txt_cr_shogaku5" type="text" id="txt_cr_shogaku5"></td>
+    </tr>
+  </table>
+</form>
+<p><hr align="center">
+&nbsp;
+<form name="form1" method="post" action="">
+  <input name="btn_mkxml" type="button" onClick="makeXml();" value="XMLレコード作成"><br><br>
+</form>
+
+
+<p>&nbsp;</p>
+<hr align="center">
+<div id="div_xml1">
+  <p class="style4">ここにタグを表示する</p>
+</div>
+<hr align="center">
+
+<form>
+  <div align="center"><center><p><input type="button" value="前のページへ戻る"
+  onclick="history.back()" style="padding-top: 10px; padding-bottom: 10px"> </p>
+  </center></div>
+</form></body>
+</html>
